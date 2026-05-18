@@ -158,41 +158,48 @@ select:focus{border-color:#3a8c3a;}
 <script>
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbygy0yO2WeobQck3p5V8lzEmQzlUNGGjiFubfJGWVfMKEIfyOUiHvCJdhbKkNUNu3hpLg/exec';
 
+function getDiff(pts) {
+  if (pts >= 50) return '최상';
+  if (pts >= 40) return '상';
+  if (pts >= 30) return '중상';
+  if (pts >= 20) return '중';
+  return '하';
+}
 const posts = [
-  {n:1,loc:"장학카페 창고 컨테이너 우측벽",diff:"하",pts:10},
-  {n:2,loc:"크당 뒤편 나무기둥",diff:"하",pts:10},
-  {n:3,loc:"학생회 컨테이너 앞 학교간판",diff:"중",pts:10},
-  {n:4,loc:"크당입구 신발장 우측 끝",diff:"하",pts:10},
-  {n:5,loc:"학교 좌측 측면 벽",diff:"중",pts:10},
-  {n:6,loc:"학교건물 뒤편 기둥",diff:"중중",pts:20},
-  {n:7,loc:"학교 우측 식당 쪽 지붕 끝",diff:"하",pts:10},
-  {n:8,loc:"학교 중앙 건물 뒤 소나무",diff:"중중",pts:20},
-  {n:9,loc:"작당 입구 문고리",diff:"중중",pts:20},
-  {n:10,loc:"작당 앞건물 통로",diff:"중중",pts:20},
-  {n:11,loc:"운동장 컨테이너 농구대 기둥",diff:"하",pts:10},
-  {n:12,loc:"경로당 모퉁이 스텐기둥",diff:"중",pts:20},
-  {n:13,loc:"경로당 정자 기둥",diff:"중",pts:20},
-  {n:14,loc:"마을 골목 전봇대 기둥",diff:"상",pts:20},
-  {n:15,loc:"마을 도로 천변 기둥",diff:"중",pts:20},
-  {n:16,loc:"웃말교 건너 우측 전봇대",diff:"상",pts:30},
-  {n:17,loc:"16번 우측 천변 분전반",diff:"상",pts:30},
-  {n:18,loc:"선고교 좌측 정자 기둥",diff:"상",pts:30},
-  {n:19,loc:"선고교 건너 좌측 도로 전봇대",diff:"최상",pts:40},
-  {n:20,loc:"맑음이네 집 전봇대(도로쪽)",diff:"최상",pts:40},
-  {n:21,loc:"바위솔카페 뒤편 건물",diff:"최상",pts:50},
-  {n:22,loc:"보안등 전봇대",diff:"상",pts:40},
-  {n:23,loc:"웃말교 우측 둑방길 고춧대(녹색 울타리)",diff:"최상",pts:50},
-  {n:24,loc:"웃말교 우측 둑방길 고춧대 기둥",diff:"최상",pts:40},
-  {n:25,loc:"둑방길 끝 비포장길 나무(정면)",diff:"최상",pts:60},
-  {n:26,loc:"학교입구 우측 고목",diff:"중",pts:20},
-  {n:27,loc:"학교입구 도로 도요타 중장비",diff:"중",pts:30},
-  {n:28,loc:"마을 선고교 건너 뚝방 전봇대",diff:"중",pts:30},
-  {n:29,loc:"퇴골교 지나 우측 전봇대",diff:"중중",pts:30},
-  {n:30,loc:"정류장 맞은편 창고 끝",diff:"중",pts:30},
-  {n:31,loc:"선생님 댁 대문기둥",diff:"상",pts:40},
-  {n:32,loc:"하늘마루 무대 철제 기둥",diff:"최상",pts:60},
-  {n:33,loc:"폐기물 울타리",diff:"상",pts:50},
-];
+  {n:1,loc:"장학카페 창고 컨테이너 우측벽",pts:10},
+  {n:2,loc:"크당 뒤편 나무기둥",pts:10},
+  {n:3,loc:"학생회 컨테이너 앞 학교간판",pts:10},
+  {n:4,loc:"크당입구 신발장 우측 끝",pts:10},
+  {n:5,loc:"학교 좌측 측면 벽",pts:10},
+  {n:6,loc:"학교건물 뒤편 기둥",pts:20},
+  {n:7,loc:"학교 우측 식당 쪽 지붕 끝",pts:10},
+  {n:8,loc:"학교 중앙 건물 뒤 소나무",pts:20},
+  {n:9,loc:"작당 입구 문고리",pts:20},
+  {n:10,loc:"작당 앞건물 통로",pts:20},
+  {n:11,loc:"운동장 컨테이너 농구대 기둥",pts:10},
+  {n:12,loc:"경로당 모퉁이 스텐기둥",pts:20},
+  {n:13,loc:"경로당 정자 기둥",pts:20},
+  {n:14,loc:"마을 골목 전봇대 기둥",pts:20},
+  {n:15,loc:"마을 도로 천변 기둥",pts:20},
+  {n:16,loc:"웃말교 건너 우측 전봇대",pts:30},
+  {n:17,loc:"16번 우측 천변 분전반",pts:30},
+  {n:18,loc:"선고교 좌측 정자 기둥",pts:30},
+  {n:19,loc:"선고교 건너 좌측 도로 전봇대",pts:40},
+  {n:20,loc:"맑음이네 집 전봇대(도로쪽)",pts:40},
+  {n:21,loc:"바위솔카페 뒤편 건물",pts:50},
+  {n:22,loc:"보안등 전봇대",pts:40},
+  {n:23,loc:"웃말교 우측 둑방길 고춧대(녹색 울타리)",pts:50},
+  {n:24,loc:"웃말교 우측 둑방길 고춧대 기둥",pts:40},
+  {n:25,loc:"둑방길 끝 비포장길 나무(정면)",pts:60},
+  {n:26,loc:"학교입구 우측 고목",pts:20},
+  {n:27,loc:"학교입구 도로 도요타 중장비",pts:30},
+  {n:28,loc:"마을 선고교 건너 뚝방 전봇대",pts:30},
+  {n:29,loc:"퇴골교 지나 우측 전봇대",pts:30},
+  {n:30,loc:"정류장 맞은편 창고 끝",pts:30},
+  {n:31,loc:"선생님 댁 대문기둥",pts:40},
+  {n:32,loc:"하늘마루 무대 철제 기둥",pts:60},
+  {n:33,loc:"폐기물 울타리",pts:50},
+].map(p => ({...p, diff: getDiff(p.pts)}));
 
 const diffEmoji = {하:'🟢',중:'🟡',중중:'🟠',상:'🟠',최상:'🔴'};
 let selPost = null;
