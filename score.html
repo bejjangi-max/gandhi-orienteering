@@ -243,7 +243,7 @@ function renderGroup(data) {
       <div class="rc-top">
         <div class="rc-rank">${medal}</div>
         <div class="rc-name">${g.name}</div>
-        <div class="rc-avg">${g.avg}점</div>
+        <div class="rc-avg">${g.avg}점<span style="font-size:0.6em;color:rgba(255,255,255,0.45);margin-left:4px;">(÷${g.participated})</span></div>
       </div>
       <div class="rc-members">${membersHtml}</div>`;
     el.onclick = () => showGroupDetail(g);
