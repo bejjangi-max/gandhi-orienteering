@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>간디엔티어링 인증</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#f0f7e6;min-height:100vh;max-width:480px;margin:0 auto;}
+
+header{background:linear-gradient(135deg,#1a5c1a,#3a8c3a);color:#fff;text-align:center;padding:16px 16px 12px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,0.2);}
+header h1{font-size:1.15em;font-weight:800;}
+header p{font-size:0.75em;opacity:0.85;margin-top:3px;}
+
+.card{background:#fff;border-radius:14px;padding:16px;margin:12px;box-shadow:0 2px 8px rgba(0,0,0,0.07);}
+.card h3{font-size:0.9em;color:#1a5c1a;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+
+/* 포스트 번호 큰 표시 */
+.post-hero{background:linear-gradient(135deg,#1a5c1a,#3a8c3a);color:#fff;border-radius:16px;margin:12px;padding:20px;text-align:center;}
+.post-hero .num{font-size:3em;font-weight:900;line-height:1;}
+.post-hero .pts{font-size:1.1em;font-weight:700;margin-top:4px;opacity:0.9;}
+.post-hero .loc{font-size:0.78em;opacity:0.8;margin-top:6px;}
+.diff-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:0.72em;font-weight:700;margin-top:6px;}
+.diff-하{background:rgba(255,255,255,0.25);color:#fff;}
+.diff-중{background:rgba(255,220,0,0.35);color:#fff;}
+.diff-중중{background:rgba(255,180,0,0.35);color:#fff;}
+.diff-상{background:rgba(255,120,0,0.35);color:#fff;}
+.diff-최상{background:rgba(255,60,60,0.35);color:#fff;}
+
+/* 포스트 선택 그리드 */
+.post-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;}
+.pg-item{background:#f8f8f8;border:2px solid #ddd;border-radius:10px;padding:8px 4px;text-align:center;cursor:pointer;transition:all 0.15s;}
+.pg-item:active{transform:scale(0.95);}
+.pg-item.sel{background:#e6f4e6;border-color:#1a5c1a;}
+.pg-item .pn{font-size:1em;font-weight:800;color:#333;}
+.pg-item.sel .pn{color:#1a5c1a;}
+.pg-item .pp{font-size:0.62em;color:#e67e22;font-weight:700;}
+
+select{width:100%;padding:12px;border:1.5px solid #ccc;border-radius:10px;font-size:0.95em;background:#fff;outline:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;}
+select:focus{border-color:#3a8c3a;}
+
+/* 사진 업로드 */
+.photo-zone{border:2.5px dashed #aad4aa;border-radius:12px;padding:28px 16px;text-align:center;cursor:pointer;background:#fafff8;transition:all 0.2s;position:relative;}
+.photo-zone:active{background:#f0f9eb;}
+.photo-zone .icon{font-size:2.8em;}
+.photo-zone p{font-size:0.8em;color:#666;margin-top:8px;line-height:1.5;}
+.photo-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+#preview{width:100%;border-radius:10px;margin-top:10px;display:none;max-height:280px;object-fit:cover;}
+
+.warn{font-size:0.75em;color:#e74c3c;background:#fff5f5;border:1px solid #fcc;border-radius:8px;padding:8px 10px;margin-bottom:10px;}
+
+.btn-submit{width:100%;padding:16px;background:linear-gradient(135deg,#1a5c1a,#3a8c3a);color:#fff;border:none;border-radius:14px;font-size:1.05em;font-weight:800;cursor:pointer;letter-spacing:0.5px;transition:opacity 0.2s;margin-top:4px;}
+.btn-submit:active{opacity:0.85;}
+.btn-submit:disabled{opacity:0.45;cursor:not-allowed;}
+
+/* 로딩 */
+.loading{display:none;text-align:center;padding:30px;}
+.spinner{width:40px;height:40px;border:4px solid #ddd;border-top-color:#3a8c3a;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 12px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* 성공 */
+.success{display:none;text-align:center;padding:30px 20px;}
+.success .big{font-size:4em;}
+.success h2{color:#1a5c1a;font-size:1.2em;margin-top:10px;font-weight:800;}
+.success p{font-size:0.85em;color:#555;margin-top:8px;line-height:1.6;}
+.btn-again{margin-top:20px;padding:12px 28px;background:#1a5c1a;color:#fff;border:none;border-radius:12px;font-size:0.9em;font-weight:700;cursor:pointer;}
+
+/* 에러 */
+.err-msg{background:#fff5f5;border:1.5px solid #fcc;border-radius:10px;padding:12px;font-size:0.82em;color:#c0392b;margin-top:10px;display:none;}
+
+/* 모드 선택 (QR없이 수동 선택) */
+.mode-bar{display:flex;gap:8px;margin:12px;background:#fff;border-radius:12px;padding:8px;box-shadow:0 1px 4px rgba(0,0,0,0.07);}
+.mode-btn{flex:1;padding:9px;border:none;border-radius:8px;font-size:0.82em;font-weight:700;cursor:pointer;background:#f5f5f5;color:#666;transition:all 0.2s;}
+.mode-btn.active{background:#1a5c1a;color:#fff;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🕊️ 간디엔티어링 포스트 인증</h1>
+  <p>2026 제천간디학교 대동제 · 5월 24일</p>
+</header>
+
+<div id="app">
+  <!-- 모드 바 -->
+  <div class="mode-bar" id="modeBar">
+    <button class="mode-btn active" id="btnQR" onclick="setMode('qr')">📍 QR 인증</button>
+    <button class="mode-btn" id="btnManual" onclick="setMode('manual')">🔢 번호 직접 선택</button>
+  </div>
+
+  <!-- QR 모드: 포스트 자동 인식 -->
+  <div id="qrMode">
+    <div class="post-hero" id="postHero" style="display:none;"></div>
+    <div class="card" id="noPostCard">
+      <h3>⚠️ 포스트 정보 없음</h3>
+      <p style="font-size:0.82em;color:#666;line-height:1.6;">QR코드를 스캔해서 접속하거나,<br>상단에서 <b>번호 직접 선택</b>을 눌러주세요.</p>
+    </div>
+  </div>
+
+  <!-- 수동 모드: 포스트 직접 선택 -->
+  <div id="manualMode" style="display:none;">
+    <div class="card">
+      <h3>📍 포스트 번호 선택</h3>
+      <div class="post-grid" id="postGrid"></div>
+    </div>
+    <div class="post-hero" id="postHeroManual" style="display:none;"></div>
+  </div>
+
+  <!-- 공통 폼 -->
+  <div id="formArea" style="display:none;">
+    <div class="card">
+      <h3>👥 우리 팀 선택</h3>
+      <select id="teamSel">
+        <option value="">-- 팀을 선택하세요 --</option>
+        <option>권수한무A</option><option>권수한무B</option><option>권수한무C</option><option>권수한무D</option><option>권수한무E</option>
+        <option>령역전개A</option><option>령역전개B</option><option>령역전개C</option><option>령역전개D</option><option>령역전개E</option>
+        <option>승호잇짜A</option><option>승호잇짜B</option><option>승호잇짜C</option><option>승호잇짜D</option><option>승호잇짜E</option>
+        <option>양과사는남자A</option><option>양과사는남자B</option><option>양과사는남자C</option><option>양과사는남자D</option><option>양과사는남자E</option>
+        <option>이정상회담A</option><option>이정상회담B</option><option>이정상회담C</option><option>이정상회담D</option><option>이정상회담E</option>
+        <option>정이팡팡A</option><option>정이팡팡B</option><option>정이팡팡C</option><option>정이팡팡D</option><option>정이팡팡E</option>
+        <option>주전부리A</option><option>주전부리B</option><option>주전부리C</option><option>주전부리D</option><option>주전부리E</option>
+        <option>현영이맘에저장A</option><option>현영이맘에저장B</option><option>현영이맘에저장C</option><option>현영이맘에저장D</option><option>현영이맘에저장E</option>
+      </select>
+    </div>
+
+    <div class="card">
+      <h3>📷 인증 사진</h3>
+      <p class="warn">⚠️ 플래그와 팀원 전원 얼굴이 모두 나와야 해요!</p>
+      <div class="photo-zone" id="photoZone">
+        <div class="icon">📷</div>
+        <p>여기를 눌러 사진 촬영 또는 선택<br><span style="font-size:0.85em;color:#aaa;">플래그 + 팀원 전원 포함</span></p>
+        <input type="file" id="fileInput" accept="image/*" capture="environment" onchange="onPhoto(event)">
+        <img id="preview" alt="미리보기">
+      </div>
+    </div>
+
+    <div style="margin:0 12px 20px;">
+      <div class="err-msg" id="errMsg"></div>
+      <button class="btn-submit" id="submitBtn" onclick="doSubmit()">🚩 인증 제출하기</button>
+    </div>
+  </div>
+
+  <!-- 로딩 -->
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+    <p style="font-size:0.85em;color:#555;">인증 중... 잠시만 기다려주세요</p>
+  </div>
+
+  <!-- 성공 -->
+  <div class="success" id="success">
+    <div class="big">🎉</div>
+    <h2>인증 완료!</h2>
+    <p id="successMsg"></p>
+    <button class="btn-again" onclick="reset()">다른 포스트 인증하기</button>
+  </div>
+</div>
+
+<script>
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbygy0yO2WeobQck3p5V8lzEmQzlUNGGjiFubfJGWVfMKEIfyOUiHvCJdhbKkNUNu3hpLg/exec';
+
+const posts = [
+  {n:1,loc:"장학카페 창고 컨테이너 우측벽",diff:"하",pts:10},
+  {n:2,loc:"크당 뒤편 나무기둥",diff:"하",pts:10},
+  {n:3,loc:"학생회 컨테이너 앞 학교간판",diff:"중",pts:10},
+  {n:4,loc:"크당입구 신발장 우측 끝",diff:"하",pts:10},
+  {n:5,loc:"학교 좌측 측면 벽",diff:"중",pts:10},
+  {n:6,loc:"학교건물 뒤편 기둥",diff:"중중",pts:20},
+  {n:7,loc:"학교 우측 식당 쪽 지붕 끝",diff:"하",pts:10},
+  {n:8,loc:"학교 중앙 건물 뒤 소나무",diff:"중중",pts:20},
+  {n:9,loc:"작당 입구 문고리",diff:"중중",pts:20},
+  {n:10,loc:"작당 앞건물 통로",diff:"중중",pts:20},
+  {n:11,loc:"운동장 컨테이너 농구대 기둥",diff:"하",pts:10},
+  {n:12,loc:"경로당 모퉁이 스텐기둥",diff:"중",pts:20},
+  {n:13,loc:"경로당 정자 기둥",diff:"중",pts:20},
+  {n:14,loc:"마을 골목 전봇대 기둥",diff:"상",pts:20},
+  {n:15,loc:"마을 도로 천변 기둥",diff:"중",pts:20},
+  {n:16,loc:"웃말교 건너 우측 전봇대",diff:"상",pts:30},
+  {n:17,loc:"16번 우측 천변 분전반",diff:"상",pts:30},
+  {n:18,loc:"선고교 좌측 정자 기둥",diff:"상",pts:30},
+  {n:19,loc:"선고교 건너 좌측 도로 전봇대",diff:"최상",pts:40},
+  {n:20,loc:"맑음이네 집 전봇대(도로쪽)",diff:"최상",pts:40},
+  {n:21,loc:"바위솔카페 뒤편 건물",diff:"최상",pts:50},
+  {n:22,loc:"보안등 전봇대",diff:"상",pts:40},
+  {n:23,loc:"웃말교 우측 둑방길 고춧대(녹색 울타리)",diff:"최상",pts:50},
+  {n:24,loc:"웃말교 우측 둑방길 고춧대 기둥",diff:"최상",pts:40},
+  {n:25,loc:"둑방길 끝 비포장길 나무(정면)",diff:"최상",pts:60},
+  {n:26,loc:"학교입구 우측 고목",diff:"중",pts:20},
+  {n:27,loc:"학교입구 도로 도요타 중장비",diff:"중",pts:30},
+  {n:28,loc:"마을 선고교 건너 뚝방 전봇대",diff:"중",pts:30},
+  {n:29,loc:"퇴골교 지나 우측 전봇대",diff:"중중",pts:30},
+  {n:30,loc:"정류장 맞은편 창고 끝",diff:"중",pts:30},
+  {n:31,loc:"선생님 댁 대문기둥",diff:"상",pts:40},
+  {n:32,loc:"하늘마루 무대 철제 기둥",diff:"최상",pts:60},
+  {n:33,loc:"폐기물 울타리",diff:"상",pts:50},
+];
+
+const diffEmoji = {하:'🟢',중:'🟡',중중:'🟠',상:'🟠',최상:'🔴'};
+let selPost = null;
+let photoData = null;
+let mode = 'qr';
+
+// URL 파라미터에서 포스트 번호 읽기
+function getURLPost() {
+  const p = new URLSearchParams(window.location.search);
+  return parseInt(p.get('post')) || null;
+}
+
+function renderHero(p, elId) {
+  const el = document.getElementById(elId);
+  el.style.display = 'block';
+  el.innerHTML = `
+    <div class="num">No.${p.n}</div>
+    <div class="pts">🏅 ${p.pts}점</div>
+    <div class="loc">📍 ${p.loc}</div>
+    <span class="diff-badge diff-${p.diff}">${diffEmoji[p.diff]} 난이도 ${p.diff}</span>
+  `;
+}
+
+function setPost(num) {
+  const p = posts.find(x => x.n === num);
+  if (!p) return;
+  selPost = p;
+  document.getElementById('formArea').style.display = 'block';
+  if (mode === 'qr') {
+    renderHero(p, 'postHero');
+  } else {
+    renderHero(p, 'postHeroManual');
+    // 그리드 선택 표시
+    document.querySelectorAll('.pg-item').forEach(el => {
+      el.classList.toggle('sel', parseInt(el.dataset.n) === num);
+    });
+  }
+}
+
+function setMode(m) {
+  mode = m;
+  document.getElementById('btnQR').classList.toggle('active', m === 'qr');
+  document.getElementById('btnManual').classList.toggle('active', m === 'manual');
+  document.getElementById('qrMode').style.display = m === 'qr' ? 'block' : 'none';
+  document.getElementById('manualMode').style.display = m === 'manual' ? 'block' : 'none';
+  document.getElementById('formArea').style.display = 'none';
+  selPost = null;
+}
+
+// 포스트 그리드 빌드
+function buildGrid() {
+  const g = document.getElementById('postGrid');
+  posts.forEach(p => {
+    const el = document.createElement('div');
+    el.className = 'pg-item';
+    el.dataset.n = p.n;
+    el.innerHTML = `<div class="pn">${p.n}</div><div class="pp">${p.pts}pt</div>`;
+    el.onclick = () => setPost(p.n);
+    g.appendChild(el);
+  });
+}
+
+function onPhoto(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  // 모바일 최적화: 이미지 리사이즈
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      const MAX = 1200;
+      let w = img.width, h = img.height;
+      if (w > MAX) { h = h * MAX / w; w = MAX; }
+      if (h > MAX) { w = w * MAX / h; h = MAX; }
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      photoData = canvas.toDataURL('image/jpeg', 0.82);
+      const prev = document.getElementById('preview');
+      prev.src = photoData;
+      prev.style.display = 'block';
+      document.getElementById('photoZone').querySelector('p').style.display = 'none';
+      document.getElementById('photoZone').querySelector('.icon').style.display = 'none';
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+async function doSubmit() {
+  const team = document.getElementById('teamSel').value;
+  const err = document.getElementById('errMsg');
+  err.style.display = 'none';
+
+  if (!selPost) { showErr('포스트를 선택해주세요!'); return; }
+  if (!team) { showErr('팀을 선택해주세요!'); return; }
+  if (!photoData) { showErr('인증 사진을 올려주세요!'); return; }
+
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('loading').style.display = 'block';
+
+  try {
+    const resp = await fetch(GAS_URL, {
+      method: 'POST',
+      body: JSON.stringify({
+        action: 'submit',
+        team,
+        postNum: selPost.n,
+        postPts: selPost.pts,
+        photoBase64: photoData,
+        photoName: `${team}_post${selPost.n}.jpg`
+      })
+    });
+    const data = await resp.json();
+    document.getElementById('loading').style.display = 'none';
+
+    if (data.success) {
+      document.getElementById('successMsg').innerHTML =
+        `<b>${team}</b> 팀<br>No.${selPost.n} 포스트 인증 완료!<br><b style="color:#1a5c1a;font-size:1.1em;">+${selPost.pts}점 획득! 🎯</b>`;
+      document.getElementById('success').style.display = 'block';
+    } else {
+      document.getElementById('app').style.display = 'block';
+      showErr(data.message || '오류가 발생했어요. 다시 시도해주세요.');
+    }
+  } catch(e) {
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    showErr('서버 연결 오류. 인터넷 연결을 확인해주세요.');
+  }
+}
+
+function showErr(msg) {
+  const el = document.getElementById('errMsg');
+  el.textContent = '⚠️ ' + msg;
+  el.style.display = 'block';
+  el.scrollIntoView({behavior:'smooth'});
+}
+
+function reset() {
+  selPost = null; photoData = null;
+  document.getElementById('teamSel').value = '';
+  document.getElementById('preview').style.display = 'none';
+  document.getElementById('preview').src = '';
+  document.getElementById('photoZone').querySelector('p').style.display = 'block';
+  document.getElementById('photoZone').querySelector('.icon').style.display = 'block';
+  document.getElementById('fileInput').value = '';
+  document.getElementById('formArea').style.display = 'none';
+  document.getElementById('postHeroManual').style.display = 'none';
+  document.getElementById('errMsg').style.display = 'none';
+  document.querySelectorAll('.pg-item').forEach(el => el.classList.remove('sel'));
+  document.getElementById('success').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+
+  // QR 모드면 URL 포스트 다시 읽기
+  const urlPost = getURLPost();
+  if (urlPost) setPost(urlPost);
+}
+
+// 초기화
+buildGrid();
+const urlPost = getURLPost();
+if (urlPost) {
+  document.getElementById('noPostCard').style.display = 'none';
+  setPost(urlPost);
+  // QR로 왔으면 모드바 숨기기
+  document.getElementById('modeBar').style.display = 'none';
+} else {
+  document.getElementById('postHero').style.display = 'none';
+}
+</script>
+</body>
+</html>
