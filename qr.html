@@ -8,58 +8,44 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#f5f5f5;padding:16px;}
-
 h1{text-align:center;font-size:1.2em;color:#1a5c1a;margin-bottom:6px;}
 p.sub{text-align:center;font-size:0.78em;color:#666;margin-bottom:16px;}
-
 .btn-row{display:flex;gap:8px;justify-content:center;margin-bottom:20px;flex-wrap:wrap;}
 .btn{padding:10px 20px;border:none;border-radius:10px;font-size:0.85em;font-weight:700;cursor:pointer;}
 .btn-print{background:#1a5c1a;color:#fff;}
-.btn-all{background:#e67e22;color:#fff;}
-
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;}
-
 .qr-card{background:#fff;border-radius:12px;padding:14px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.08);border:2px solid #ddd;page-break-inside:avoid;}
-.qr-card.diff-하{border-color:#27ae60;}
-.qr-card.diff-중{border-color:#f39c12;}
-.qr-card.diff-중중{border-color:#e67e22;}
-.qr-card.diff-상{border-color:#e74c3c;}
-.qr-card.diff-최상{border-color:#8e44ad;}
-
+.qr-card.d-하{border-color:#27ae60;}
+.qr-card.d-중{border-color:#f39c12;}
+.qr-card.d-중상{border-color:#e67e22;}
+.qr-card.d-상{border-color:#e74c3c;}
+.qr-card.d-최상{border-color:#8e44ad;}
 .qr-num{font-size:1.4em;font-weight:900;color:#1a5c1a;margin-bottom:2px;}
 .qr-pts{font-size:0.85em;color:#e67e22;font-weight:700;}
 .qr-loc{font-size:0.68em;color:#555;margin:4px 0 8px;line-height:1.4;}
 .qr-img{display:flex;justify-content:center;margin:6px 0;}
 .diff-badge{font-size:0.68em;padding:2px 8px;border-radius:10px;font-weight:700;margin-top:6px;display:inline-block;}
-.diff-하{background:#d5f5e3;color:#1e8449;}
-.diff-중{background:#fef9e7;color:#b7950b;}
-.diff-중중{background:#fdebd0;color:#ca6f1e;}
-.diff-상{background:#fadbd8;color:#c0392b;}
-.diff-최상{background:#e8daef;color:#6c3483;}
-
+.d-하 .diff-badge{background:#d5f5e3;color:#1e8449;}
+.d-중 .diff-badge{background:#fef9e7;color:#b7950b;}
+.d-중상 .diff-badge{background:#fdebd0;color:#ca6f1e;}
+.d-상 .diff-badge{background:#fadbd8;color:#c0392b;}
+.d-최상 .diff-badge{background:#e8daef;color:#6c3483;}
 .url-text{font-size:0.58em;color:#aaa;margin-top:6px;word-break:break-all;}
-
 @media print {
   body{background:#fff;padding:8px;}
-  .btn-row{display:none;}
-  h1,p.sub{display:none;}
+  .btn-row, h1, p.sub{display:none;}
   .grid{grid-template-columns:repeat(3,1fr);gap:8px;}
   .qr-card{box-shadow:none;border:1.5px solid #ccc;padding:10px;}
 }
 </style>
 </head>
 <body>
-
 <h1>🕊️ 2026 간디엔티어링 QR코드</h1>
 <p class="sub">각 포스트에 해당 QR코드를 출력해서 붙여주세요</p>
-
 <div class="btn-row">
   <button class="btn btn-print" onclick="window.print()">🖨️ 전체 인쇄</button>
-  <button class="btn btn-all" onclick="testAll()">🔗 링크 테스트</button>
 </div>
-
 <div class="grid" id="grid"></div>
-
 <script>
 const BASE = 'https://bejjangi-max.github.io/gandhi-orienteering/?post=';
 
@@ -70,6 +56,9 @@ function getDiff(pts) {
   if (pts >= 20) return '중';
   return '하';
 }
+
+const diffEmoji = {'하':'🟢','중':'🟡','중상':'🟠','상':'🔴','최상':'🟣'};
+
 const posts = [
   {n:1,loc:"장학카페 창고 컨테이너 우측벽",pts:10},
   {n:2,loc:"크당 뒤편 나무기둥",pts:10},
@@ -106,39 +95,29 @@ const posts = [
   {n:33,loc:"폐기물 울타리",pts:50},
 ].map(p => ({...p, diff: getDiff(p.pts)}));
 
-const diffEmoji = {하:'🟢',중:'🟡',중중:'🟠',상:'🔴',최상:'🟣'};
-
 const grid = document.getElementById('grid');
-
 posts.forEach(p => {
   const url = BASE + p.n;
+  const emoji = diffEmoji[p.diff] || '';
   const card = document.createElement('div');
-  card.className = `qr-card diff-${p.diff}`;
+  card.className = `qr-card d-${p.diff}`;
   card.innerHTML = `
     <div class="qr-num">No. ${p.n}</div>
     <div class="qr-pts">🏅 ${p.pts}점</div>
     <div class="qr-loc">${p.loc}</div>
     <div class="qr-img" id="qr${p.n}"></div>
-    <div class="diff-badge diff-${p.diff}">${diffEmoji[p.diff]} 난이도 ${p.diff}</div>
+    <div class="diff-badge">${emoji} 난이도 ${p.diff}</div>
     <div class="url-text">${url}</div>
   `;
   grid.appendChild(card);
-
   setTimeout(() => {
     new QRCode(document.getElementById('qr' + p.n), {
-      text: url,
-      width: 140,
-      height: 140,
-      colorDark: '#1a5c1a',
-      colorLight: '#ffffff',
+      text: url, width:140, height:140,
+      colorDark:'#1a5c1a', colorLight:'#ffffff',
       correctLevel: QRCode.CorrectLevel.M
     });
   }, p.n * 30);
 });
-
-function testAll() {
-  window.open(BASE + '1', '_blank');
-}
 </script>
 </body>
 </html>
