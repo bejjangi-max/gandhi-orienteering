@@ -274,7 +274,6 @@ async function doSubmit(){
     if(data.success){
       document.getElementById('successMsg').innerHTML=
         `<b>${team}</b> 팀<br>No.${selPost.n} 포스트 인증 완료!<br><b style="color:#1a5c1a;font-size:1.1em;">+${selPost.pts}점 획득! 🎯</b>`;
-      show('successArea');
     }else{
       show('mainArea');
       showErr(data.message||'오류가 발생했어요. 다시 시도해주세요.');
