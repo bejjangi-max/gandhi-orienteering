@@ -71,25 +71,12 @@ select:focus{border-color:#3a8c3a;}
 
 <!-- 메인 앱 -->
 <div id="mainArea">
-  <div class="mode-bar" id="modeBar">
-    <button class="mode-btn active" id="btnQR" onclick="setMode('qr')">📍 QR 인증</button>
-    <button class="mode-btn" id="btnManual" onclick="setMode('manual')">🔢 번호 직접 선택</button>
-  </div>
-
   <div id="qrMode">
     <div class="post-hero" id="postHero" style="display:none;"></div>
     <div class="card" id="noPostCard">
       <h3>⚠️ 포스트 정보 없음</h3>
-      <p style="font-size:0.82em;color:#666;line-height:1.6;">QR코드를 스캔해서 접속하거나,<br>상단에서 <b>번호 직접 선택</b>을 눌러주세요.</p>
+      <p style="font-size:0.82em;color:#666;line-height:1.6;">QR코드를 스캔해서 접속해주세요.</p>
     </div>
-  </div>
-
-  <div id="manualMode" style="display:none;">
-    <div class="card">
-      <h3>📍 포스트 번호 선택</h3>
-      <div class="post-grid" id="postGrid"></div>
-    </div>
-    <div class="post-hero" id="postHeroManual" style="display:none;"></div>
   </div>
 
   <div id="formArea" style="display:none;">
@@ -140,7 +127,7 @@ select:focus{border-color:#3a8c3a;}
   <div class="big">🎉</div>
   <h2>인증이 완료되었습니다.</h2>
   <p id="successMsg"></p>
-  <button class="btn-again" onclick="resetAll()">다른 포스트 인증하기</button>
+
 </div>
 
 <script>
