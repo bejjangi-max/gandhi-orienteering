@@ -166,17 +166,26 @@ async function doSubmit(){
   try{
     const controller=new AbortController();
     const timeout=setTimeout(()=>controller.abort(),30000);
-    await fetch(GAS_URL,{
-      method:'POST',
-      mode:'no-cors',
-      signal:controller.signal,
-      body:JSON.stringify({action:'submit',team,postNum:selPost.n,postPts:selPost.pts,photoBase64:''})
+    const params=new URLSearchParams({
+      action:'submit',
+      team:team,
+      postNum:selPost.n,
+      postPts:selPost.pts
+    });
+    const resp=await fetch(`${GAS_URL}?${params.toString()}`,{
+      method:'GET',
+      signal:controller.signal
     });
     clearTimeout(timeout);
-    // no-cors 모드에서는 응답을 읽을 수 없으므로 성공으로 처리
-    document.getElementById('successMsg').innerHTML=
-      `<b>${team}</b> 팀<br>No.${selPost.n} 포스트 인증 완료!<br><b style="color:#1a5c1a;font-size:1.1em;">+${selPost.pts}점 획득! 🎯</b>`;
-    show('successArea');
+    const data=await resp.json();
+    if(data.success){
+      document.getElementById('successMsg').innerHTML=
+        `<b>${team}</b> 팀<br>No.${selPost.n} 포스트 인증 완료!<br><b style="color:#1a5c1a;font-size:1.1em;">+${selPost.pts}점 획득! 🎯</b>`;
+      show('successArea');
+    }else{
+      show('mainArea');
+      showErr(data.message||'오류가 발생했어요. 다시 시도해주세요.');
+    }
   }catch(e){
     show('mainArea');
     if(e.name==='AbortError') showErr('서버 응답 시간 초과. 다시 시도해주세요.');
