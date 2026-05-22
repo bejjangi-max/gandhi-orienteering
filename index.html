@@ -13,35 +13,25 @@ header h1{font-size:1.15em;font-weight:800;}
 header p{font-size:0.75em;opacity:0.85;margin-top:3px;}
 
 .card{background:#fff;border-radius:14px;padding:16px;margin:12px;box-shadow:0 2px 8px rgba(0,0,0,0.07);}
-.card h3{font-size:0.9em;color:#1a5c1a;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.card h3{font-size:0.9em;color:#1a5c1a;font-weight:700;margin-bottom:10px;}
 
-/* 포스트 번호 큰 표시 */
 .post-hero{background:linear-gradient(135deg,#1a5c1a,#3a8c3a);color:#fff;border-radius:16px;margin:12px;padding:20px;text-align:center;}
 .post-hero .num{font-size:3em;font-weight:900;line-height:1;}
 .post-hero .pts{font-size:1.1em;font-weight:700;margin-top:4px;opacity:0.9;}
 .post-hero .loc{font-size:0.78em;opacity:0.8;margin-top:6px;}
-.diff-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:0.72em;font-weight:700;margin-top:6px;}
-.diff-하{background:rgba(255,255,255,0.25);color:#fff;}
-.diff-중{background:rgba(255,220,0,0.35);color:#fff;}
-.diff-중중{background:rgba(255,180,0,0.35);color:#fff;}
-.diff-상{background:rgba(255,120,0,0.35);color:#fff;}
-.diff-최상{background:rgba(255,60,60,0.35);color:#fff;}
+.diff-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:0.72em;font-weight:700;margin-top:6px;background:rgba(255,255,255,0.25);color:#fff;}
 
-/* 포스트 선택 그리드 */
 .post-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;}
 .pg-item{background:#f8f8f8;border:2px solid #ddd;border-radius:10px;padding:8px 4px;text-align:center;cursor:pointer;transition:all 0.15s;}
-.pg-item:active{transform:scale(0.95);}
 .pg-item.sel{background:#e6f4e6;border-color:#1a5c1a;}
 .pg-item .pn{font-size:1em;font-weight:800;color:#333;}
 .pg-item.sel .pn{color:#1a5c1a;}
 .pg-item .pp{font-size:0.62em;color:#e67e22;font-weight:700;}
 
-select{width:100%;padding:12px;border:1.5px solid #ccc;border-radius:10px;font-size:0.95em;background:#fff;outline:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;}
+select{width:100%;padding:12px;border:1.5px solid #ccc;border-radius:10px;font-size:0.95em;background:#fff;outline:none;}
 select:focus{border-color:#3a8c3a;}
 
-/* 사진 업로드 */
-.photo-zone{border:2.5px dashed #aad4aa;border-radius:12px;padding:28px 16px;text-align:center;cursor:pointer;background:#fafff8;transition:all 0.2s;position:relative;}
-.photo-zone:active{background:#f0f9eb;}
+.photo-zone{border:2.5px dashed #aad4aa;border-radius:12px;padding:28px 16px;text-align:center;cursor:pointer;background:#fafff8;position:relative;}
 .photo-zone .icon{font-size:2.8em;}
 .photo-zone p{font-size:0.8em;color:#666;margin-top:8px;line-height:1.5;}
 .photo-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
@@ -49,28 +39,26 @@ select:focus{border-color:#3a8c3a;}
 
 .warn{font-size:0.75em;color:#e74c3c;background:#fff5f5;border:1px solid #fcc;border-radius:8px;padding:8px 10px;margin-bottom:10px;}
 
-.btn-submit{width:100%;padding:16px;background:linear-gradient(135deg,#1a5c1a,#3a8c3a);color:#fff;border:none;border-radius:14px;font-size:1.05em;font-weight:800;cursor:pointer;letter-spacing:0.5px;transition:opacity 0.2s;margin-top:4px;}
+.btn-submit{width:100%;padding:16px;background:linear-gradient(135deg,#1a5c1a,#3a8c3a);color:#fff;border:none;border-radius:14px;font-size:1.05em;font-weight:800;cursor:pointer;margin-top:4px;}
 .btn-submit:active{opacity:0.85;}
 .btn-submit:disabled{opacity:0.45;cursor:not-allowed;}
 
+.err-msg{background:#fff5f5;border:1.5px solid #fcc;border-radius:10px;padding:12px;font-size:0.82em;color:#c0392b;margin-top:10px;display:none;}
+
 /* 로딩 */
-.loading{display:none;text-align:center;padding:30px;}
-.spinner{width:40px;height:40px;border:4px solid #ddd;border-top-color:#3a8c3a;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 12px;}
+#loadingArea{display:none;text-align:center;padding:60px 20px;}
+.spinner{width:40px;height:40px;border:4px solid #ddd;border-top-color:#3a8c3a;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 16px;}
 @keyframes spin{to{transform:rotate(360deg);}}
 
 /* 성공 */
-.success{display:none;text-align:center;padding:30px 20px;}
-.success .big{font-size:4em;}
-.success h2{color:#1a5c1a;font-size:1.2em;margin-top:10px;font-weight:800;}
-.success p{font-size:0.85em;color:#555;margin-top:8px;line-height:1.6;}
-.btn-again{margin-top:20px;padding:12px 28px;background:#1a5c1a;color:#fff;border:none;border-radius:12px;font-size:0.9em;font-weight:700;cursor:pointer;}
+#successArea{display:none;text-align:center;padding:40px 20px;}
+#successArea .big{font-size:4em;}
+#successArea h2{color:#1a5c1a;font-size:1.3em;margin-top:10px;font-weight:800;}
+#successArea p{font-size:0.88em;color:#555;margin-top:10px;line-height:1.8;}
+.btn-again{margin-top:24px;padding:13px 30px;background:#1a5c1a;color:#fff;border:none;border-radius:12px;font-size:0.95em;font-weight:700;cursor:pointer;display:inline-block;}
 
-/* 에러 */
-.err-msg{background:#fff5f5;border:1.5px solid #fcc;border-radius:10px;padding:12px;font-size:0.82em;color:#c0392b;margin-top:10px;display:none;}
-
-/* 모드 선택 (QR없이 수동 선택) */
 .mode-bar{display:flex;gap:8px;margin:12px;background:#fff;border-radius:12px;padding:8px;box-shadow:0 1px 4px rgba(0,0,0,0.07);}
-.mode-btn{flex:1;padding:9px;border:none;border-radius:8px;font-size:0.82em;font-weight:700;cursor:pointer;background:#f5f5f5;color:#666;transition:all 0.2s;}
+.mode-btn{flex:1;padding:9px;border:none;border-radius:8px;font-size:0.82em;font-weight:700;cursor:pointer;background:#f5f5f5;color:#666;}
 .mode-btn.active{background:#1a5c1a;color:#fff;}
 </style>
 </head>
@@ -81,14 +69,13 @@ select:focus{border-color:#3a8c3a;}
   <p>2026 제천간디학교 대동제 · 5월 24일</p>
 </header>
 
-<div id="app">
-  <!-- 모드 바 -->
+<!-- 메인 앱 -->
+<div id="mainArea">
   <div class="mode-bar" id="modeBar">
     <button class="mode-btn active" id="btnQR" onclick="setMode('qr')">📍 QR 인증</button>
     <button class="mode-btn" id="btnManual" onclick="setMode('manual')">🔢 번호 직접 선택</button>
   </div>
 
-  <!-- QR 모드: 포스트 자동 인식 -->
   <div id="qrMode">
     <div class="post-hero" id="postHero" style="display:none;"></div>
     <div class="card" id="noPostCard">
@@ -97,7 +84,6 @@ select:focus{border-color:#3a8c3a;}
     </div>
   </div>
 
-  <!-- 수동 모드: 포스트 직접 선택 -->
   <div id="manualMode" style="display:none;">
     <div class="card">
       <h3>📍 포스트 번호 선택</h3>
@@ -106,7 +92,6 @@ select:focus{border-color:#3a8c3a;}
     <div class="post-hero" id="postHeroManual" style="display:none;"></div>
   </div>
 
-  <!-- 공통 폼 -->
   <div id="formArea" style="display:none;">
     <div class="card">
       <h3>👥 우리 팀 선택</h3>
@@ -137,38 +122,36 @@ select:focus{border-color:#3a8c3a;}
       </div>
     </div>
 
-    <div style="margin:0 12px 20px;">
+    <div style="margin:0 12px 30px;">
       <div class="err-msg" id="errMsg"></div>
       <button class="btn-submit" id="submitBtn" onclick="doSubmit()">🚩 인증 제출하기</button>
     </div>
   </div>
+</div>
 
-  <!-- 로딩 -->
-  <div class="loading" id="loading">
-    <div class="spinner"></div>
-    <p style="font-size:0.85em;color:#555;">인증 중... 잠시만 기다려주세요</p>
-  </div>
+<!-- 로딩 -->
+<div id="loadingArea">
+  <div class="spinner"></div>
+  <p style="font-size:0.85em;color:#555;">인증 중... 잠시만 기다려주세요</p>
+</div>
 
-  <!-- 성공 -->
-  <div class="success" id="success">
-    <div class="big">🎉</div>
-    <h2>인증이 완료되었습니다.</h2>
-    <p id="successMsg"></p>
-    <button class="btn-again" onclick="reset()">다른 포스트 인증하기</button>
-  </div>
+<!-- 성공 -->
+<div id="successArea">
+  <div class="big">🎉</div>
+  <h2>인증이 완료되었습니다.</h2>
+  <p id="successMsg"></p>
+  <button class="btn-again" onclick="resetAll()">다른 포스트 인증하기</button>
 </div>
 
 <script>
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbygy0yO2WeobQck3p5V8lzEmQzlUNGGjiFubfJGWVfMKEIfyOUiHvCJdhbKkNUNu3hpLg/exec';
 
-function getDiff(pts) {
-  if (pts >= 50) return '최상';
-  if (pts >= 40) return '상';
-  if (pts >= 30) return '중상';
-  if (pts >= 20) return '중';
-  return '하';
+function getDiff(pts){
+  if(pts>=50)return'최상';if(pts>=40)return'상';if(pts>=30)return'중상';if(pts>=20)return'중';return'하';
 }
-const posts = [
+const diffEmoji={'하':'🟢','중':'🟡','중상':'🟠','상':'🔴','최상':'🟣'};
+
+const posts=[
   {n:1,loc:"장학카페 창고 컨테이너 우측벽",pts:10},
   {n:2,loc:"크당 뒤편 나무기둥",pts:10},
   {n:3,loc:"학생회 컨테이너 앞 학교간판",pts:10},
@@ -202,194 +185,151 @@ const posts = [
   {n:31,loc:"선생님 댁 대문기둥",pts:40},
   {n:32,loc:"하늘마루 무대 철제 기둥",pts:60},
   {n:33,loc:"폐기물 울타리",pts:50},
-].map(p => ({...p, diff: getDiff(p.pts)}));
+].map(p=>({...p,diff:getDiff(p.pts)}));
 
-const diffEmoji = {하:'🟢',중:'🟡',중중:'🟠',상:'🟠',최상:'🔴'};
-let selPost = null;
-let photoData = null;
-let mode = 'qr';
+let selPost=null, photoData=null, mode='qr';
 
-// URL 파라미터에서 포스트 번호 읽기
-function getURLPost() {
-  const p = new URLSearchParams(window.location.search);
-  return parseInt(p.get('post')) || null;
+function show(id){
+  ['mainArea','loadingArea','successArea'].forEach(x=>{
+    document.getElementById(x).style.display = x===id ? 'block' : 'none';
+  });
 }
 
-function renderHero(p, elId) {
-  const el = document.getElementById(elId);
-  el.style.display = 'block';
-  el.innerHTML = `
-    <div class="num">No.${p.n}</div>
-    <div class="pts">🏅 ${p.pts}점</div>
-    <div class="loc">📍 ${p.loc}</div>
-    <span class="diff-badge diff-${p.diff}">${diffEmoji[p.diff]} 난이도 ${p.diff}</span>
-  `;
+function getURLPost(){
+  return parseInt(new URLSearchParams(window.location.search).get('post'))||null;
 }
 
-function setPost(num) {
-  const p = posts.find(x => x.n === num);
-  if (!p) return;
-  selPost = p;
-  document.getElementById('formArea').style.display = 'block';
-  if (mode === 'qr') {
-    renderHero(p, 'postHero');
-  } else {
-    renderHero(p, 'postHeroManual');
-    // 그리드 선택 표시
-    document.querySelectorAll('.pg-item').forEach(el => {
-      el.classList.toggle('sel', parseInt(el.dataset.n) === num);
-    });
+function renderHero(p,elId){
+  const el=document.getElementById(elId);
+  el.style.display='block';
+  el.innerHTML=`<div class="num">No.${p.n}</div><div class="pts">🏅 ${p.pts}점</div><div class="loc">📍 ${p.loc}</div><span class="diff-badge">${diffEmoji[p.diff]||''} 난이도 ${p.diff}</span>`;
+}
+
+function setPost(num){
+  const p=posts.find(x=>x.n===num);
+  if(!p)return;
+  selPost=p;
+  document.getElementById('formArea').style.display='block';
+  if(mode==='qr') renderHero(p,'postHero');
+  else{
+    renderHero(p,'postHeroManual');
+    document.querySelectorAll('.pg-item').forEach(el=>el.classList.toggle('sel',parseInt(el.dataset.n)===num));
   }
 }
 
-function setMode(m) {
-  mode = m;
-  document.getElementById('btnQR').classList.toggle('active', m === 'qr');
-  document.getElementById('btnManual').classList.toggle('active', m === 'manual');
-  document.getElementById('qrMode').style.display = m === 'qr' ? 'block' : 'none';
-  document.getElementById('manualMode').style.display = m === 'manual' ? 'block' : 'none';
-  document.getElementById('formArea').style.display = 'none';
-  selPost = null;
+function setMode(m){
+  mode=m;
+  document.getElementById('btnQR').classList.toggle('active',m==='qr');
+  document.getElementById('btnManual').classList.toggle('active',m==='manual');
+  document.getElementById('qrMode').style.display=m==='qr'?'block':'none';
+  document.getElementById('manualMode').style.display=m==='manual'?'block':'none';
+  document.getElementById('formArea').style.display='none';
+  selPost=null;
 }
 
-// 포스트 그리드 빌드
-function buildGrid() {
-  const g = document.getElementById('postGrid');
-  posts.forEach(p => {
-    const el = document.createElement('div');
-    el.className = 'pg-item';
-    el.dataset.n = p.n;
-    el.innerHTML = `<div class="pn">${p.n}</div><div class="pp">${p.pts}pt</div>`;
-    el.onclick = () => setPost(p.n);
+function buildGrid(){
+  const g=document.getElementById('postGrid');
+  posts.forEach(p=>{
+    const el=document.createElement('div');
+    el.className='pg-item'; el.dataset.n=p.n;
+    el.innerHTML=`<div class="pn">${p.n}</div><div class="pp">${p.pts}pt</div>`;
+    el.onclick=()=>setPost(p.n);
     g.appendChild(el);
   });
 }
 
-function onPhoto(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-
-  // 파일 크기 체크 (5MB 초과시 경고)
-  if (file.size > 5 * 1024 * 1024) {
-    showErr('사진 용량이 너무 커요. 카메라 해상도를 낮춰서 다시 찍어주세요.');
-    return;
-  }
-
-  const reader = new FileReader();
-  reader.onload = ev => {
-    const img = new Image();
-    img.onload = () => {
-      try {
-        const canvas = document.createElement('canvas');
-        // 최대 800px로 줄여서 메모리 절약
-        const MAX = 800;
-        let w = img.width, h = img.height;
-        if (w > h) {
-          if (w > MAX) { h = Math.round(h * MAX / w); w = MAX; }
-        } else {
-          if (h > MAX) { w = Math.round(w * MAX / h); h = MAX; }
-        }
-        canvas.width = w;
-        canvas.height = h;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, w, h);
-        photoData = canvas.toDataURL('image/jpeg', 0.7);
-        canvas.width = 0; canvas.height = 0; // 메모리 해제
-        const prev = document.getElementById('preview');
-        prev.src = photoData;
-        prev.style.display = 'block';
-        document.getElementById('photoZone').querySelector('p').style.display = 'none';
-        document.getElementById('photoZone').querySelector('.icon').style.display = 'none';
-      } catch(err) {
-        showErr('사진 처리 중 오류가 났어요. 다시 시도해주세요.');
-      }
+function onPhoto(e){
+  const file=e.target.files[0];
+  if(!file)return;
+  if(file.size>5*1024*1024){showErr('사진 용량이 너무 커요. 카메라 해상도를 낮춰서 다시 찍어주세요.');return;}
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    const img=new Image();
+    img.onload=()=>{
+      try{
+        const canvas=document.createElement('canvas');
+        const MAX=800;
+        let w=img.width,h=img.height;
+        if(w>h){if(w>MAX){h=Math.round(h*MAX/w);w=MAX;}}
+        else{if(h>MAX){w=Math.round(w*MAX/h);h=MAX;}}
+        canvas.width=w; canvas.height=h;
+        canvas.getContext('2d').drawImage(img,0,0,w,h);
+        photoData=canvas.toDataURL('image/jpeg',0.7);
+        canvas.width=0; canvas.height=0;
+        const prev=document.getElementById('preview');
+        prev.src=photoData; prev.style.display='block';
+        document.getElementById('photoZone').querySelector('p').style.display='none';
+        document.getElementById('photoZone').querySelector('.icon').style.display='none';
+      }catch(err){showErr('사진 처리 중 오류가 났어요. 다시 시도해주세요.');}
     };
-    img.onerror = () => showErr('사진을 불러올 수 없어요. 다시 시도해주세요.');
-    img.src = ev.target.result;
+    img.onerror=()=>showErr('사진을 불러올 수 없어요.');
+    img.src=ev.target.result;
   };
-  reader.onerror = () => showErr('사진 읽기 오류. 다시 시도해주세요.');
+  reader.onerror=()=>showErr('사진 읽기 오류. 다시 시도해주세요.');
   reader.readAsDataURL(file);
 }
 
-async function doSubmit() {
-  const team = document.getElementById('teamSel').value;
-  const err = document.getElementById('errMsg');
-  err.style.display = 'none';
+async function doSubmit(){
+  const team=document.getElementById('teamSel').value;
+  document.getElementById('errMsg').style.display='none';
+  if(!selPost){showErr('포스트를 선택해주세요!');return;}
+  if(!team){showErr('팀을 선택해주세요!');return;}
+  if(!photoData){showErr('인증 사진을 올려주세요!');return;}
 
-  if (!selPost) { showErr('포스트를 선택해주세요!'); return; }
-  if (!team) { showErr('팀을 선택해주세요!'); return; }
-  if (!photoData) { showErr('인증 사진을 올려주세요!'); return; }
+  show('loadingArea');
 
-  document.getElementById('app').style.display = 'none';
-  document.getElementById('loading').style.display = 'block';
-
-  try {
-    const resp = await fetch(GAS_URL, {
-      method: 'POST',
-      body: JSON.stringify({
-        action: 'submit',
-        team,
-        postNum: selPost.n,
-        postPts: selPost.pts,
-        photoBase64: photoData,
-        photoName: `${team}_post${selPost.n}.jpg`
-      })
+  try{
+    const resp=await fetch(GAS_URL,{
+      method:'POST',
+      body:JSON.stringify({action:'submit',team,postNum:selPost.n,postPts:selPost.pts,photoBase64:photoData})
     });
-    const data = await resp.json();
-    document.getElementById('loading').style.display = 'none';
-
-    if (data.success) {
-      document.getElementById('successMsg').innerHTML =
-        `${team} 팀<br>No.${selPost.n} 포스트 인증 완료!<br><b style="color:#1a5c1a;font-size:1.1em;">+${selPost.pts}점 획득! 🎯</b>`;
-      document.getElementById('success').style.display = 'block';
-    } else {
-      document.getElementById('app').style.display = 'block';
-      showErr(data.message || '오류가 발생했어요. 다시 시도해주세요.');
+    const data=await resp.json();
+    if(data.success){
+      document.getElementById('successMsg').innerHTML=
+        `<b>${team}</b> 팀<br>No.${selPost.n} 포스트 인증 완료!<br><b style="color:#1a5c1a;font-size:1.1em;">+${selPost.pts}점 획득! 🎯</b>`;
+      show('successArea');
+    }else{
+      show('mainArea');
+      showErr(data.message||'오류가 발생했어요. 다시 시도해주세요.');
     }
-  } catch(e) {
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
+  }catch(e){
+    show('mainArea');
     showErr('서버 연결 오류. 인터넷 연결을 확인해주세요.');
   }
 }
 
-function showErr(msg) {
-  const el = document.getElementById('errMsg');
-  el.textContent = '⚠️ ' + msg;
-  el.style.display = 'block';
+function showErr(msg){
+  const el=document.getElementById('errMsg');
+  el.textContent='⚠️ '+msg;
+  el.style.display='block';
   el.scrollIntoView({behavior:'smooth'});
 }
 
-function reset() {
-  selPost = null; photoData = null;
-  document.getElementById('teamSel').value = '';
-  document.getElementById('preview').style.display = 'none';
-  document.getElementById('preview').src = '';
-  document.getElementById('photoZone').querySelector('p').style.display = 'block';
-  document.getElementById('photoZone').querySelector('.icon').style.display = 'block';
-  document.getElementById('fileInput').value = '';
-  document.getElementById('formArea').style.display = 'none';
-  document.getElementById('postHeroManual').style.display = 'none';
-  document.getElementById('errMsg').style.display = 'none';
-  document.querySelectorAll('.pg-item').forEach(el => el.classList.remove('sel'));
-  document.getElementById('success').style.display = 'none';
-  document.getElementById('app').style.display = 'block';
-
-  // QR 모드면 URL 포스트 다시 읽기
-  const urlPost = getURLPost();
-  if (urlPost) setPost(urlPost);
+function resetAll(){
+  selPost=null; photoData=null;
+  document.getElementById('teamSel').value='';
+  document.getElementById('preview').style.display='none';
+  document.getElementById('preview').src='';
+  document.getElementById('fileInput').value='';
+  document.getElementById('formArea').style.display='none';
+  document.getElementById('postHeroManual').style.display='none';
+  document.getElementById('errMsg').style.display='none';
+  document.getElementById('photoZone').querySelector('p').style.display='block';
+  document.getElementById('photoZone').querySelector('.icon').style.display='block';
+  document.querySelectorAll('.pg-item').forEach(el=>el.classList.remove('sel'));
+  show('mainArea');
+  const urlPost=getURLPost();
+  if(urlPost) setPost(urlPost);
 }
 
 // 초기화
 buildGrid();
-const urlPost = getURLPost();
-if (urlPost) {
-  document.getElementById('noPostCard').style.display = 'none';
+show('mainArea');
+const urlPost=getURLPost();
+if(urlPost){
+  document.getElementById('noPostCard').style.display='none';
+  document.getElementById('modeBar').style.display='none';
   setPost(urlPost);
-  // QR로 왔으면 모드바 숨기기
-  document.getElementById('modeBar').style.display = 'none';
-} else {
-  document.getElementById('postHero').style.display = 'none';
 }
 </script>
 </body>
