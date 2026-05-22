@@ -120,6 +120,9 @@ select:focus{border-color:#3a8c3a;}
         <option>정이팡팡A</option><option>정이팡팡B</option><option>정이팡팡C</option><option>정이팡팡D</option>
         <option>주전부리A</option><option>주전부리B</option><option>주전부리C</option><option>주전부리D</option>
         <option>현영이맘에저장A</option><option>현영이맘에저장B</option><option>현영이맘에저장C</option><option>현영이맘에저장D</option>
+        <option>오륙도A</option><option>오륙도B</option><option>오륙도C</option><option>오륙도D</option><option>오륙도E</option>
+        <option>졸업생</option>
+        <option>동문회</option>
       </select>
     </div>
 
@@ -185,7 +188,7 @@ const posts = [
   {n:17,loc:"16번 우측 천변 분전반",pts:30},
   {n:18,loc:"선고교 좌측 정자 기둥",pts:30},
   {n:19,loc:"선고교 건너 좌측 도로 전봇대",pts:40},
-  {n:20,loc:"맑음이네 집 전봇대(도로쪽)",pts:40},
+  {n:20,loc:"맑은이네 집 전봇대(도로쪽)",pts:40},
   {n:21,loc:"바위솔카페 뒤편 건물",pts:50},
   {n:22,loc:"보안등 전봇대",pts:40},
   {n:23,loc:"웃말교 우측 둑방길 고춧대(녹색 울타리)",pts:50},
@@ -318,7 +321,7 @@ async function doSubmit() {
 
     if (data.success) {
       document.getElementById('successMsg').innerHTML =
-        `<b>${team}</b> 팀<br>No.${selPost.n} 포스트 인증 완료!<br><b style="color:#1a5c1a;font-size:1.1em;">+${selPost.pts}점 획득! 🎯</b>`;
+        `<b style="font-size:1.1em;">인증이 완료되었습니다.</b><br><br>${team} 팀<br>No.${selPost.n} 포스트 인증 완료!<br><b style="color:#1a5c1a;font-size:1.1em;">+${selPost.pts}점 획득! 🎯</b>`;
       document.getElementById('success').style.display = 'block';
     } else {
       document.getElementById('app').style.display = 'block';
