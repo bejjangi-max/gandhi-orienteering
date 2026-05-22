@@ -127,7 +127,7 @@ select:focus{border-color:#3a8c3a;}
   <div class="big">🎉</div>
   <h2>인증이 완료되었습니다.</h2>
   <p id="successMsg"></p>
-
+None
 </div>
 
 <script>
@@ -310,12 +310,10 @@ function resetAll(){
 }
 
 // 초기화
-buildGrid();
 show('mainArea');
 const urlPost=getURLPost();
 if(urlPost){
   document.getElementById('noPostCard').style.display='none';
-  document.getElementById('modeBar').style.display='none';
   setPost(urlPost);
 }
 </script>
